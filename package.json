@@ -9,12 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/server": "^4.9.1",
-    "@as-integrations/next": "^3.2.0",
-    "@graphql-tools/merge": "^9.0.0",
+    "@prisma/client": "^6.10.1",
     "autoprefixer": "10.4.14",
-    "graphql": "^16.11.0",
-    "graphql-tag": "^2.12.6",
     "next": "15.3.3",
     "next-auth": "^4.22.3",
     "postcss": "8.4.27",
@@ -31,6 +27,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
+    "prisma": "^6.10.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
