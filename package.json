@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node --project tsconfig.local.json prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.10.1",
@@ -31,12 +31,16 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@faker-js/faker": "^9.8.0",
     "@tailwindcss/postcss": "^4",
+    "@types/bcrypt": "^5.0.2",
+    "@types/lodash": "^4.17.18",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
+    "lodash": "^4.17.21",
     "prisma": "^6.10.1",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
