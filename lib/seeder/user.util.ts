@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { sample } from "lodash";
 import * as bcrypt from "bcrypt";
+import { UserRole } from "../../app/_generated/prisma";
 
 const emailSymbols = ["-", ".", "_"];
 
@@ -11,7 +12,8 @@ export const createFakeUser = async () => {
     emailSymbols
   )}${randomSurname}@testemail.co.uk`.toLowerCase();
   const hashedPassword = await bcrypt.hash("password111", 10);
-  const role = "PARENT";
+  const phoneNumber = faker.phone.number();
+  const role = UserRole.PARENT;
 
   return {
     firstName: randomFirstName,
@@ -19,5 +21,6 @@ export const createFakeUser = async () => {
     email,
     password: hashedPassword,
     role,
+    phoneNumber,
   };
 };
