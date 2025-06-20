@@ -1,9 +1,8 @@
-import { baseProcedure, router } from "./trpc";
+import { registerRouter } from "./routers/auth/register";
+import { router } from "./trpc";
 
 export const appRouter = router({
-  getSomething: baseProcedure.query(async () => {
-    return "something";
-  }),
+  auth: registerRouter,
 });
 
 export type AppRouter = typeof appRouter;

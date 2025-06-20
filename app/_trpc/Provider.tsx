@@ -1,5 +1,7 @@
 "use client";
+
 import React, { ReactNode, useState } from "react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 
@@ -8,7 +10,7 @@ import { trpc } from "./client";
 interface TRPCProviderProps {
   children: ReactNode;
 }
-export default function Provider({ children }: TRPCProviderProps) {
+export default function Providers({ children }: TRPCProviderProps) {
   const [queryClient] = useState(() => new QueryClient({}));
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -21,8 +23,12 @@ export default function Provider({ children }: TRPCProviderProps) {
   );
 
   return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </trpc.Provider>
+    <ChakraProvider>
+      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </trpc.Provider>
+    </ChakraProvider>
   );
 }
