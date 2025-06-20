@@ -7,14 +7,11 @@ interface CreateContextOptions {
   req: Request;
 }
 
-export async function createContext({ req }: CreateContextOptions) {
-  const cookie = req.headers.get("cookie") ?? undefined;
-  const token = await getToken({ req: { headers: { cookie } } as any });
-
+export async function createContext({ req, res }: CreateNextContextOptions) {
   return {
     req,
+    res,
     prisma,
-    user: token ?? null,
   };
 }
 

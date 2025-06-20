@@ -44,6 +44,15 @@ export default function Home() {
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     mode: "onBlur",
+    defaultValues: {
+      firstName: "Rueben",
+      surname: "Cumberbatch",
+      email: "ruebencee@gmail.com",
+      phoneNumber: "07785382638",
+      role: "PARENT",
+      password: "Password11",
+      passwordConfirmation: "Password11",
+    },
   });
 
   const registerMutation = trpc.auth.handleRegistration.useMutation();
@@ -75,9 +84,10 @@ export default function Home() {
         mb="2"
         justifyContent="center"
         alignItems="center"
+        spacing={4}
       >
-        <Avatar bg="teal.500" />
-        <Heading color="teal.400">Registration</Heading>
+        <Avatar bg="brand.500" />
+        <Heading color="brand.400">Registration</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack
@@ -178,7 +188,7 @@ export default function Home() {
 
               <Button
                 type="submit"
-                colorScheme="teal"
+                colorScheme="brand"
                 isLoading={registerMutation.isPending}
               >
                 Register
@@ -203,7 +213,7 @@ export default function Home() {
       </Stack>
       <Box>
         Already registered?{" "}
-        <Link color="teal.500" href="/login">
+        <Link color="brand.500" href="/login">
           Login
         </Link>
       </Box>

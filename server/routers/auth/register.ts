@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { baseProcedure, router } from "@/server/trpc";
 import { registerSchema } from "@/server/schemas/auth";
+import { serialize } from "cookie";
 
 const JWT_SECRET = process.env.JWT_SECRET_KEY!;
 
@@ -37,6 +38,17 @@ export const registerRouter = router({
       const accessToken = jwt.sign(tokenPayload, JWT_SECRET, {
         expiresIn: "1h",
       });
+
+      ctx.res.setHeader(
+        "Set-Cookie",
+        serialize("token", accessToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          maxAge: 60 * 60, // 1 hour
+          path: "/",
+        })
+      );
 
       return { id: newUser.id, email: newUser.email, accessToken };
     }),
