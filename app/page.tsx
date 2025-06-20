@@ -24,9 +24,11 @@ export default function Home() {
 
         {/* Auth buttons */}
         <Flex gap={3}>
-          <Button variant="ghost" colorScheme="brand">
-            Login
-          </Button>
+          <Link href="/login" passHref>
+            <Button variant="ghost" colorScheme="brand">
+              Login
+            </Button>
+          </Link>
           <Link type="button" href="/register" passHref>
             <Button as="a" colorScheme="brand">
               Register

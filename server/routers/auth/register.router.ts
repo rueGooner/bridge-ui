@@ -2,8 +2,6 @@ import bcrypt from "bcrypt";
 import { baseProcedure, router } from "@/server/trpc";
 import { registerSchema } from "@/server/schemas/auth";
 
-const JWT_SECRET = process.env.JWT_SECRET_KEY!;
-
 export const registerRouter = router({
   handleRegistration: baseProcedure
     .input(registerSchema)

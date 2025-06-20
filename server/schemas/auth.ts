@@ -26,3 +26,6 @@ export const registerSchema = loginSchema
     message: "Passwords do not match",
     path: ["passwordConfirmation"],
   });
+
+export type LoginUserPayload = z.TypeOf<typeof loginSchema>;
+export type RegisterUserPayload = z.TypeOf<typeof registerSchema>;
