@@ -35,7 +35,7 @@ import { useRouter } from "next/navigation";
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
-export default function Home() {
+export default function RegisterPage() {
   const router = useRouter();
   const {
     register,
@@ -56,15 +56,26 @@ export default function Home() {
   });
 
   const registerMutation = trpc.auth.handleRegistration.useMutation();
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState<boolean>(false);
+  const [countdown, setCountdown] = useState<number>(3);
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
       await registerMutation.mutateAsync(data);
       setSuccess(true);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 2500);
+
+      let count = 3;
+      setCountdown(count);
+
+      const interval = setInterval(() => {
+        count -= 1;
+        setCountdown(count);
+
+        if (count === 0) {
+          clearInterval(interval);
+          router.push("/login");
+        }
+      }, 1000);
     } catch (err) {
       console.error(err);
     }
@@ -204,7 +215,8 @@ export default function Home() {
               {success && (
                 <Alert status="success">
                   <AlertIcon />
-                  Registered successfully!
+                  Registered successfully! You will be able to login in{" "}
+                  {countdown}
                 </Alert>
               )}
             </Stack>
