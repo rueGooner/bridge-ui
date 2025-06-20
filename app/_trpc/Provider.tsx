@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 
 import { trpc } from "./client";
+import theme from "@/themes/theme";
 
 interface TRPCProviderProps {
   children: ReactNode;
@@ -23,7 +24,7 @@ export default function Providers({ children }: TRPCProviderProps) {
   );
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
           {children}

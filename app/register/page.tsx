@@ -117,7 +117,7 @@ export default function Home() {
                     <FiLock color="gray.300" />
                   </InputLeftElement>
                   <Input
-                    type="passwordConfirmation"
+                    type="password"
                     {...register("passwordConfirmation")}
                     placeholder="Confirm Password"
                   />

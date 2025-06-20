@@ -1,16 +1,17 @@
-import * as z from "zod";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { baseProcedure, router } from "@/server/trpc";
-import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/server/schemas/auth";
+
+const JWT_SECRET = process.env.JWT_SECRET_KEY!;
 
 export const registerRouter = router({
   handleRegistration: baseProcedure
     .input(registerSchema)
-    .mutation(async ({ input }) => {
-      const { password, email, ...rest } = input;
+    .mutation(async ({ input, ctx }) => {
+      const { password, email, passwordConfirmation, ...rest } = input;
 
-      const existingUser = await prisma.user.findUnique({
+      const existingUser = await ctx.prisma.user.findUnique({
         where: {
           email,
         },
@@ -19,7 +20,7 @@ export const registerRouter = router({
       if (existingUser) throw new Error("This User already exists");
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = await prisma.user.create({
+      const newUser = await ctx.prisma.user.create({
         data: {
           email,
           password: hashedPassword,
@@ -27,6 +28,16 @@ export const registerRouter = router({
         },
       });
 
-      return { id: newUser.id, email: newUser.email };
+      const tokenPayload = {
+        userId: newUser.id,
+        email: newUser.email,
+        role: newUser.role,
+      };
+
+      const accessToken = jwt.sign(tokenPayload, JWT_SECRET, {
+        expiresIn: "1h",
+      });
+
+      return { id: newUser.id, email: newUser.email, accessToken };
     }),
 });
