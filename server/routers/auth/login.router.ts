@@ -32,7 +32,7 @@ export const loginRouter = router({
         };
 
         const accessToken = await jwt.sign(tokenPayload, secret as jwt.Secret, {
-          expiresIn: "1h",
+          expiresIn: "60s",
         });
 
         const cookieOptions = {
@@ -44,7 +44,7 @@ export const loginRouter = router({
 
         (await cookies()).set("token", accessToken, cookieOptions);
 
-        return { message: "Login successful", accessToken };
+        return { message: "Login successful", accessToken, success: true };
       }
     ),
 });

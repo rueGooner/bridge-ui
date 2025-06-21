@@ -45,8 +45,13 @@ export default function LoginPage() {
   const loginMutation = trpc.login.handleLogin.useMutation();
 
   const onSubmit = async (data: LoginFormData) => {
-    const response = await loginMutation.mutateAsync(data);
-    router.push("/dashboard");
+    const { success } = await loginMutation.mutateAsync(data);
+    setTimeout(() => {
+      if (success) {
+        console.log("REDIRECT TO /Dashboard");
+        router.push("/dashboard");
+      }
+    }, 2000);
   };
 
   return (
@@ -113,14 +118,6 @@ export default function LoginPage() {
                 <Alert status="error">
                   <AlertIcon />
                   {loginMutation.error.message}
-                </Alert>
-              )}
-
-              {false && (
-                <Alert status="success">
-                  <AlertIcon />
-                  Registered successfully! You will be able to login in{" "}
-                  {countdown}
                 </Alert>
               )}
             </Stack>
