@@ -29,10 +29,11 @@ export const loginRouter = router({
           userId: existingUser.id,
           email: existingUser.email,
           role: existingUser.role,
+          registrationStep: existingUser.registrationStep,
         };
 
         const accessToken = await jwt.sign(tokenPayload, secret as jwt.Secret, {
-          expiresIn: "60s",
+          expiresIn: "1h",
         });
 
         const cookieOptions = {
