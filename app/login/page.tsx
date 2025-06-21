@@ -17,23 +17,16 @@ import {
   InputLeftElement,
   Input,
   FormErrorMessage,
-  Select,
   Button,
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import {
-  FiMail,
-  FiLock,
-  FiUser,
-  FiUserCheck,
-  FiSmartphone,
-} from "react-icons/fi";
+import { FiMail, FiLock } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const router = useRouter();
 
   type LoginFormData = z.infer<typeof loginSchema>;
 
@@ -53,7 +46,7 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     const response = await loginMutation.mutateAsync(data);
-    console.log(response);
+    router.push("/dashboard");
   };
 
   return (
